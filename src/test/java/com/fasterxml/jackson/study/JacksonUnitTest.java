@@ -31,4 +31,21 @@ public class JacksonUnitTest {
         assertThat(mp3Player.getVolume(), is(10));
         assertThat(mp3Player.getModelNumber(), is("MEUN-02-2022"));
     }
+
+    @Test
+    public void getConvertedNullObject() {
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, String> map = new HashMap<>();
+        MP3Player mp3Player;
+
+        map.put("volume", "");
+        map.put("modelNumber", "");
+
+        mapper.enable(SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED);
+
+        mp3Player = mapper.convertValue(map, MP3Player.class);
+
+        assertThat(mp3Player.getVolume(), is(0));
+        assertThat(mp3Player.getModelNumber(), is(""));
+    }
 }
