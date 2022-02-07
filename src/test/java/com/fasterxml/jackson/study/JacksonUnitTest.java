@@ -2,8 +2,12 @@ package com.fasterxml.jackson.study;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.event.annotation.BeforeTestClass;
+import org.springframework.test.context.event.annotation.BeforeTestExecution;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.HashMap;
@@ -14,17 +18,23 @@ import static org.hamcrest.CoreMatchers.is;
 
 @ExtendWith(SpringExtension.class)
 public class JacksonUnitTest {
+    private ObjectMapper mapper;
+    private Map<String, String> map;
+    private MP3Player mp3Player;
+
+    @BeforeEach
+    public void setUp() {
+        mapper = new ObjectMapper();
+        map = new HashMap<>();
+
+        mapper.enable(SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED);
+    }
 
     @Test
     public void getConvertedObject() {
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, String> map = new HashMap<>();
-        MP3Player mp3Player;
-
+        // @JsonInclude(JsonInclude.Include.NON_NULL) 외 기본 옵션 사용 시 테스트
         map.put("volume", "10");
         map.put("modelNumber", "MEUN-02-2022");
-
-        mapper.enable(SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED);
 
         mp3Player = mapper.convertValue(map, MP3Player.class);
 
@@ -33,15 +43,10 @@ public class JacksonUnitTest {
     }
 
     @Test
-    public void getConvertedNullObject() {
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, String> map = new HashMap<>();
-        MP3Player mp3Player;
-
+    public void getConvertedEmptyObject() {
+        // @JsonSetter(nulls = Nulls.SKIP) 사용 시 테스트
         map.put("volume", "");
         map.put("modelNumber", "");
-
-        mapper.enable(SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED);
 
         mp3Player = mapper.convertValue(map, MP3Player.class);
 
