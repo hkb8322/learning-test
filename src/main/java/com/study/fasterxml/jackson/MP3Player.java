@@ -1,4 +1,4 @@
-package com.fasterxml.jackson.study;
+package com.study.fasterxml.jackson;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
