@@ -1,2 +1,5 @@
 rootProject.name = 'learning-test'
+include 'library-jackson'
+include 'spring-webflux'
+include 'jwt'
 
