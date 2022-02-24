@@ -1,4 +1,4 @@
-package com.study.jwt.entity;
+package com.study.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
