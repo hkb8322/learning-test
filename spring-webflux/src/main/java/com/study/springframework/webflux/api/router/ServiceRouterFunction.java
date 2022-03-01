@@ -1,6 +1,8 @@
 package com.study.springframework.webflux.api.router;
 
 import com.study.springframework.webflux.api.handler.ServiceHandler;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -11,8 +13,9 @@ import static org.springframework.web.reactive.function.BodyInserters.fromObject
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
-
+@Slf4j
 @Configuration
+@AllArgsConstructor
 public class ServiceRouterFunction {
 
     @Bean

@@ -1,5 +1,7 @@
 package com.study.springframework.webflux.api.handler;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -11,7 +13,9 @@ import java.util.Map;
 
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
+@Slf4j
 @Component
+@AllArgsConstructor
 public class ServiceHandler {
     // TODO: 추후 고정 데이터가 아닌 NOSQL/RDBMS 연동을 통하여 조회하도록 수정할 것
     Map<String, String> result = new HashMap<>();
