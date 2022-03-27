@@ -1,11 +1,15 @@
 package com.study.springframework.webflux.api.handler;
 
+import com.study.springframework.webflux.api.exception.CustomException;
 import com.study.springframework.webflux.api.util.CommonUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
@@ -50,20 +54,26 @@ public class ServiceHandler {
                 });
     }
 
+    public Mono<ServerResponse> getError(ServerRequest request) {
+        return ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue(new CustomException("errorCode", "errorDescription")));
+    }
+
 
     private Mono<Boolean> validateToken(String token) {
         return Mono.just(StringUtils.hasText(token));
     }
 
     private Mono<ServerResponse> createSessionResponse() {
-        ResponseCookie ConsoleSessionCookie = ResponseCookie.from("session-id", UUID.randomUUID().toString())
+        ResponseCookie cookie = ResponseCookie.from("session-id", UUID.randomUUID().toString())
                 .path("/")
                 .maxAge(Integer.MAX_VALUE)
                 .httpOnly(true)
                 .build();
 
         return ok()
-                .cookie(ConsoleSessionCookie)
+                .cookie(cookie)
                 .build();
     }
 }

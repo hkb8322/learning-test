@@ -23,11 +23,7 @@ public class ServiceRouterFunction {
         return route().path("/api/v1/test", builder -> builder
                 .GET("/", accept(MediaType.ALL), serviceHandler::findAll)
                 .GET("/hello-world", accept(MediaType.ALL), request -> ServerResponse.ok().body(fromObject("Hello-World")))
-                .GET("/sub1", accept(MediaType.APPLICATION_JSON), serviceHandler::findAll)
-                .GET("/sub1/{id}", accept(MediaType.APPLICATION_JSON), serviceHandler::findAll)
-                .GET("/sub2", accept(MediaType.APPLICATION_JSON), serviceHandler::findAll)
-                .GET("/sub2/{id}", accept(MediaType.APPLICATION_JSON), serviceHandler::findAll)
-                .GET("/sub3", accept(MediaType.APPLICATION_JSON), serviceHandler::findAll)
+                .GET("/error", accept(MediaType.ALL), serviceHandler::getError)
         ).build();
     }
 }
