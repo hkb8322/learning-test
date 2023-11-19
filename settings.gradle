@@ -2,4 +2,6 @@ rootProject.name = 'learning-test'
 include 'library-jackson'
 include 'spring-webflux'
 include 'jwt'
+include 'JAVA'
+include 'java-17'
 
